@@ -7,7 +7,7 @@
 
 Have a massive master vault, but want to focus entirely on a single project? Instead of opening a separate vault window, this plugin instantly restricts your File Explorer, Core Search, Tags Pane, and Backlinks to *only* show files within your chosen sub-folder!
 
-## ✨ Features
+## Features
 
 - **Strict File Explorer Scoping**: Instantly hides all folders and files outside your active sub-vault.
 - **Aggressive View Blocking**: Prevents accidental navigation outside your sub-vault. If you click a link that leads outside your scope, the plugin blocks it and closes the tab.
@@ -17,7 +17,7 @@ Have a massive master vault, but want to focus entirely on a single project? Ins
 - **Magical Note Creation**: Automatically moves newly created notes straight into your active sub-vault.
 - **Seamless Integrations**: Supports a native Status Bar indicator, Command Palette actions, and dynamic settings updates if you rename your folders!
 
-## 🚀 Installation
+## Installation
 
 ### Option 1: BRAT (Beta Reviewer's Auto-update Tool)
 1. Install [BRAT](https://github.com/TfTHacker/obsidian42-brat) from the Community Plugins tab.
@@ -32,17 +32,17 @@ Have a massive master vault, but want to focus entirely on a single project? Ins
 4. Place the downloaded files into that folder.
 5. Reload Obsidian and enable the plugin.
 
-## 🛠️ Usage
+## Usage
 
 1. **Set your Sub-Vault**: Right-click any folder in your File Explorer and select **Set as Active Sub-Vault**, or use the `Set Active Sub-Vault` command in your Command Palette.
 2. **Focus**: Your File Explorer, Search, Tags, and Backlinks will instantly clamp down to that folder.
 3. **Leave**: Click the `Leave Sub-Vault` icon in the left ribbon, or click the sub-vault name in your bottom Status Bar to return to your master vault.
 
-## ⚙️ Settings
+## Settings
 
 - **Active Sub-Vault**: The path to your currently focused folder.
 - **Global Allowed Folders**: A professional whitelist manager for global assets (e.g., `Attachments`, `Templates`).
 
-## 📜 License
+## License
 
 MIT License. See [LICENSE](LICENSE) for more details.
