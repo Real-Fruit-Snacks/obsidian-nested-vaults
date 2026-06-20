@@ -2,18 +2,19 @@
    DESIGN TOKENS
    ======================================== */
 :root {
-    --color-bg:         #0a0a0f;
-    --color-surface:    #12121a;
-    --color-surface-2:  #1a1a26;
-    --color-border:     rgba(255, 255, 255, 0.06);
-    --color-border-hover: rgba(255, 255, 255, 0.12);
-    --color-text:       #e8e8ed;
-    --color-text-muted: #8b8b9e;
-    --color-text-dim:   #5a5a72;
-    --color-accent:     #7c5cfc;
-    --color-accent-2:   #a78bfa;
-    --color-glow:       rgba(124, 92, 252, 0.15);
-    --color-glow-strong: rgba(124, 92, 252, 0.35);
+    /* Catppuccin Mocha */
+    --color-bg:         #1e1e2e;
+    --color-surface:    #181825;
+    --color-surface-2:  #313244;
+    --color-border:     rgba(205, 214, 244, 0.08);
+    --color-border-hover: rgba(205, 214, 244, 0.16);
+    --color-text:       #cdd6f4;
+    --color-text-muted: #a6adc8;
+    --color-text-dim:   #6c7086;
+    --color-accent:     #cba6f7;
+    --color-accent-2:   #b4befe;
+    --color-glow:       rgba(203, 166, 247, 0.12);
+    --color-glow-strong: rgba(203, 166, 247, 0.30);
     --font:             'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --radius:           12px;
     --radius-lg:        20px;
@@ -65,8 +66,8 @@ code {
 }
 
 ::selection {
-    background: var(--color-accent);
-    color: white;
+    background: #cba6f7;
+    color: #1e1e2e;
 }
 
 /* ========================================
@@ -106,7 +107,7 @@ code {
 }
 
 .nav--scrolled {
-    background: rgba(10, 10, 15, 0.82);
+    background: rgba(24, 24, 37, 0.85);
     backdrop-filter: blur(20px) saturate(1.4);
     -webkit-backdrop-filter: blur(20px) saturate(1.4);
     border-bottom-color: var(--color-border);
@@ -402,9 +403,9 @@ code {
     border-radius: 50%;
 }
 
-.mock-dot--red    { background: #ff5f57; }
-.mock-dot--yellow { background: #febc2e; }
-.mock-dot--green  { background: #28c840; }
+.mock-dot--red    { background: #f38ba8; }
+.mock-dot--yellow { background: #f9e2af; }
+.mock-dot--green  { background: #a6e3a1; }
 
 .mock-titlebar-text {
     margin-left: 12px;
