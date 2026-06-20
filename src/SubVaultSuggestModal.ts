@@ -7,7 +7,7 @@ export class SubVaultSuggestModal extends FuzzySuggestModal<TFolder> {
 	constructor(app: App, plugin: NestedVaultsPlugin) {
 		super(app);
 		this.plugin = plugin;
-		this.setPlaceholder("Select a folder to set as Active Sub-Vault...");
+		this.setPlaceholder("Select a folder to set as active sub-vault...");
 	}
 
 	getItems(): TFolder[] {
@@ -24,10 +24,10 @@ export class SubVaultSuggestModal extends FuzzySuggestModal<TFolder> {
 		return folder.path;
 	}
 
-	async onChooseItem(folder: TFolder, evt: MouseEvent | KeyboardEvent) {
+	onChooseItem(folder: TFolder, evt: MouseEvent | KeyboardEvent): void {
 		this.plugin.settings.activeSubVault = folder.path;
-		await this.plugin.saveSettings();
-		new Notice(`Active Sub-Vault set to: ${folder.path}`);
+		void this.plugin.saveSettings();
+		new Notice(`Active sub-vault set to: ${folder.path}`);
 		this.plugin.applyVisualScoping();
 	}
 }

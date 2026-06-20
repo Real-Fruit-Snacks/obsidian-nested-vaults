@@ -1,5 +1,4 @@
 import {
-	App,
 	Menu,
 	Notice,
 	Plugin,
@@ -33,41 +32,41 @@ export default class NestedVaultsPlugin extends Plugin {
 		this.statusBarEl.onClickEvent(() => {
 			if (this.settings.activeSubVault) {
 				this.settings.activeSubVault = '';
-				this.saveSettings();
-				new Notice('Left Sub-Vault. Returned to main vault.');
+				void this.saveSettings();
+				new Notice('Left sub-vault. Returned to main vault.');
 				this.applyVisualScoping();
 			}
 		});
 
 		// Ribbon icon to leave the active sub-vault
-		this.addRibbonIcon('log-out', 'Leave Active Sub-Vault', async () => {
+		this.addRibbonIcon('log-out', 'Leave active sub-vault', () => {
 			if (this.settings.activeSubVault) {
 				this.settings.activeSubVault = '';
-				await this.saveSettings();
-				new Notice('Left Sub-Vault. Returned to main vault.');
+				void this.saveSettings();
+				new Notice('Left sub-vault. Returned to main vault.');
 				this.applyVisualScoping();
 			} else {
-				new Notice('You are not currently in a Sub-Vault.');
+				new Notice('You are not currently in a sub-vault.');
 			}
 		});
 
-		// Command: Scoped Quick Switcher
+		// Command: Scoped quick switcher
 		this.addCommand({
 			id: 'open-scoped-quick-switcher',
-			name: 'Open Scoped Quick Switcher',
+			name: 'Open scoped quick switcher',
 			callback: () => {
 				new ScopedSuggestModal(this.app, this).open();
 			},
 		});
 
-		// Command: Clear Active Sub-Vault
+		// Command: Clear active sub-vault
 		this.addCommand({
 			id: 'clear-active-sub-vault',
-			name: 'Clear Active Sub-Vault',
+			name: 'Clear active sub-vault',
 			callback: async () => {
 				this.settings.activeSubVault = '';
 				await this.saveSettings();
-				new Notice('Sub-Vault cleared.');
+				new Notice('Sub-vault cleared.');
 				this.applyVisualScoping();
 			},
 		});
@@ -78,12 +77,12 @@ export default class NestedVaultsPlugin extends Plugin {
 				if (file instanceof TFolder) {
 					menu.addItem((item) => {
 						item
-							.setTitle("Set as Active Sub-Vault")
+							.setTitle("Set as active sub-vault")
 							.setIcon("target")
 							.onClick(async () => {
 								this.settings.activeSubVault = file.path;
 								await this.saveSettings();
-								new Notice(`Active Sub-Vault set to: ${file.path}`);
+								new Notice(`Active sub-vault set to: ${file.path}`);
 								this.applyVisualScoping();
 							});
 					});
@@ -97,7 +96,7 @@ export default class NestedVaultsPlugin extends Plugin {
 				if (!this.settings.activeSubVault || !file) return;
 				
 				if (!this.isPathAllowed(file.path)) {
-					new Notice("Blocked: That file is outside your active Sub-Vault.");
+					new Notice("Blocked: That file is outside your active sub-vault.");
 					const leaf = this.app.workspace.getMostRecentLeaf();
 					if (leaf && leaf.view && leaf.view.getState().file === file.path) {
 					    leaf.detach();
@@ -106,10 +105,10 @@ export default class NestedVaultsPlugin extends Plugin {
 			})
 		);
 		
-		// Command: Set Active Sub-Vault
+		// Command: Set active sub-vault
 		this.addCommand({
 			id: 'set-active-sub-vault',
-			name: 'Set Active Sub-Vault',
+			name: 'Set active sub-vault',
 			callback: () => {
 				new SubVaultSuggestModal(this.app, this).open();
 			},
@@ -143,34 +142,40 @@ export default class NestedVaultsPlugin extends Plugin {
 
 		// Listen for deleting folders
 		this.registerEvent(
-			this.app.vault.on('delete', async (file) => {
-				if (this.settings.activeSubVault === file.path || this.settings.activeSubVault.startsWith(file.path + '/')) {
-					this.settings.activeSubVault = '';
-					await this.saveSettings();
-					new Notice('Active Sub-Vault was deleted. Cleared sub-vault.');
-					this.applyVisualScoping();
-				}
+			this.app.workspace.onLayoutReady(() => {
+				this.app.vault.on('delete', async (file) => {
+					if (this.settings.activeSubVault === file.path || this.settings.activeSubVault.startsWith(file.path + '/')) {
+						this.settings.activeSubVault = '';
+						await this.saveSettings();
+						new Notice('Active sub-vault was deleted. Cleared sub-vault.');
+						this.applyVisualScoping();
+					}
+				});
 			})
 		);
 
 		// Listen for new notes created outside the active sub-vault
 		this.registerEvent(
-			this.app.vault.on('create', async (file) => {
-				if (!this.settings.activeSubVault) return;
-				if (file instanceof TFile && file.extension === 'md') {
-					if (!this.isPathAllowed(file.path)) {
-						// Wait a tiny bit to avoid Obsidian getting confused
-						setTimeout(async () => {
-							try {
-								const newPath = `${this.settings.activeSubVault}/${file.name}`;
-								await this.app.vault.rename(file, newPath);
-								new Notice(`Moved new note into Sub-Vault: ${file.name}`);
-							} catch (e) {
-								console.error("Could not move file", e);
-							}
-						}, 100);
+			this.app.workspace.onLayoutReady(() => {
+				this.app.vault.on('create', (file) => {
+					if (!this.settings.activeSubVault) return;
+					if (file instanceof TFile && file.extension === 'md') {
+						if (!this.isPathAllowed(file.path)) {
+							// Wait a tiny bit to avoid Obsidian getting confused
+							window.setTimeout(() => {
+								void (async () => {
+									try {
+										const newPath = `${this.settings.activeSubVault}/${file.name}`;
+										await this.app.vault.rename(file, newPath);
+										new Notice(`Moved new note into sub-vault: ${file.name}`);
+									} catch (e) {
+										console.error("Could not move file", e);
+									}
+								})();
+							}, 100);
+						}
 					}
-				}
+				});
 			})
 		);
 		
@@ -189,10 +194,13 @@ export default class NestedVaultsPlugin extends Plugin {
 	}
 
 	async loadSettings() {
-		const data = await this.loadData();
+		 
+		const data: unknown = await this.loadData();
 		
 		// Migration for globalAllowedFolders from string to string[]
+		 
 		if (data && typeof data.globalAllowedFolders === 'string') {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 			data.globalAllowedFolders = data.globalAllowedFolders.split(',').map((s: string) => s.trim()).filter((s: string) => s.length > 0);
 		}
 		
@@ -214,11 +222,13 @@ export default class NestedVaultsPlugin extends Plugin {
 			this.clearVisualScoping();
 			return;
 		}
-		document.body.classList.add("nested-vault-active");
+		activeDocument.body.classList.add("nested-vault-active");
 		
 		if (this.statusBarEl) {
-			this.statusBarEl.setText(`Sub-Vault: ${this.settings.activeSubVault}`);
+			this.statusBarEl.setText(`Sub-vault: ${this.settings.activeSubVault}`);
+			// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 			this.statusBarEl.style.display = '';
+			// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 			this.statusBarEl.style.cursor = 'pointer';
 		}
 		
@@ -226,9 +236,10 @@ export default class NestedVaultsPlugin extends Plugin {
 	}
 	
 	clearVisualScoping() {
-		document.body.classList.remove("nested-vault-active");
+		activeDocument.body.classList.remove("nested-vault-active");
 		if (this.statusBarEl) {
 			this.statusBarEl.setText('');
+			// eslint-disable-next-line obsidianmd/no-static-styles-assignment
 			this.statusBarEl.style.display = 'none';
 		}
 		this.updateFileExplorerElements();
@@ -260,7 +271,8 @@ export default class NestedVaultsPlugin extends Plugin {
 				}
 				// Also check frontmatter tags
 				if (cache && cache.frontmatter && cache.frontmatter.tags) {
-					const fmTags = cache.frontmatter.tags;
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+					const fmTags: any = cache.frontmatter.tags;
 					if (Array.isArray(fmTags)) {
 						fmTags.forEach(t => allowedTags.add(`#${t}`.toLowerCase()));
 					} else if (typeof fmTags === 'string') {
@@ -288,17 +300,17 @@ export default class NestedVaultsPlugin extends Plugin {
 
 	updateTagsPaneScoping() {
 		if (!this.settings.activeSubVault) {
-			document.querySelectorAll('.tag-pane .tree-item').forEach(el => {
+			activeDocument.querySelectorAll('.tag-pane .tree-item').forEach(el => {
 				el.classList.remove('is-outside-subvault');
 			});
 			return;
 		}
 		
 		const allowedTags = this.getAllowedTags();
-		document.querySelectorAll('.tag-pane .tree-item').forEach(el => {
+		activeDocument.querySelectorAll('.tag-pane .tree-item').forEach(el => {
 			const tagEl = el.querySelector('.tree-item-inner');
 			if (tagEl && tagEl.textContent) {
-				const tag = tagEl.textContent.trim().toLowerCase();
+				const tag: string = String(tagEl.textContent).trim().toLowerCase();
 				if (!allowedTags.has(tag)) {
 					el.classList.add('is-outside-subvault');
 				} else {
@@ -319,7 +331,7 @@ export default class NestedVaultsPlugin extends Plugin {
 			'.workspace-leaf-content[data-type="localgraph"] .graph-controls input'
 		].join(', ');
 
-		const searchInputs = document.querySelectorAll(selectors);
+		const searchInputs = activeDocument.querySelectorAll(selectors);
 		searchInputs.forEach((input) => {
 			const el = input as HTMLInputElement;
 			if (!el.value.includes(prefix)) {
@@ -332,7 +344,7 @@ export default class NestedVaultsPlugin extends Plugin {
 	updateFileExplorerElements() {
 		const activeSubVault = this.settings.activeSubVault;
 		
-		const allNavElements = document.querySelectorAll('.nav-folder, .nav-file');
+		const allNavElements = activeDocument.querySelectorAll('.nav-folder, .nav-file');
 		
 		if (!activeSubVault) {
 			allNavElements.forEach(el => {
@@ -364,13 +376,13 @@ export default class NestedVaultsPlugin extends Plugin {
 
 	updateBacklinksScoping() {
 		if (!this.settings.activeSubVault) {
-			document.querySelectorAll('.backlink-pane .tree-item, .workspace-leaf-content[data-type="backlink"] .tree-item').forEach(el => {
+			activeDocument.querySelectorAll('.backlink-pane .tree-item, .workspace-leaf-content[data-type="backlink"] .tree-item').forEach(el => {
 				el.classList.remove('is-outside-subvault');
 			});
 			return;
 		}
 		
-		document.querySelectorAll('.backlink-pane .search-result-file-title, .workspace-leaf-content[data-type="backlink"] .search-result-file-title').forEach(el => {
+		activeDocument.querySelectorAll('.backlink-pane .search-result-file-title, .workspace-leaf-content[data-type="backlink"] .search-result-file-title').forEach(el => {
 			const path = el.getAttribute('data-path');
 			const treeItem = el.closest('.tree-item');
 			if (path && treeItem) {
@@ -403,7 +415,7 @@ export default class NestedVaultsPlugin extends Plugin {
 				if (mutation.addedNodes.length > 0) {
 					// Check for newly added file explorer or tags elements
 					mutation.addedNodes.forEach(node => {
-						if (node instanceof HTMLElement) {
+						if (node.instanceOf(HTMLElement)) {
 							if (node.classList.contains('nav-folder') || node.classList.contains('nav-file') || node.querySelector('.nav-folder, .nav-file')) {
 								this.updateFileExplorerElements();
 							}
@@ -416,7 +428,7 @@ export default class NestedVaultsPlugin extends Plugin {
 			}
 		});
 
-		this.observer.observe(document.body, {
+		this.observer.observe(activeDocument.body, {
 			childList: true,
 			subtree: true,
 		});

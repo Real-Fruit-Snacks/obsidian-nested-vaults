@@ -39,6 +39,6 @@ export class ScopedSuggestModal extends SuggestModal<TFile> {
 	}
 
 	onChooseSuggestion(file: TFile, evt: MouseEvent | KeyboardEvent) {
-		this.app.workspace.getLeaf(evt.ctrlKey || evt.metaKey).openFile(file);
+		void this.app.workspace.getLeaf(evt.ctrlKey || evt.metaKey).openFile(file);
 	}
 }

@@ -57,14 +57,14 @@ export class NestedVaultsSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 		
-		containerEl.createEl('h2', {text: 'Nested Vault Settings'});
+		new Setting(containerEl).setName("Nested vault configuration").setHeading();
 
 		new Setting(containerEl)
-			.setName('Active Sub-Vault')
+			.setName('Active sub-vault')
 			.setDesc('The path to the folder to act as your nested vault. Leave empty to clear.')
 			.addText((text) => {
 				new FolderSuggest(this.app, text.inputEl);
-				text.setPlaceholder('e.g., Projects/MyProject')
+				text.setPlaceholder('E.g., projects/myproject')
 					.setValue(this.plugin.settings.activeSubVault)
 					.onChange(async (value) => {
 						this.plugin.settings.activeSubVault = value;
@@ -74,12 +74,12 @@ export class NestedVaultsSettingTab extends PluginSettingTab {
 			});
 			
 		containerEl.createEl('br');
-		containerEl.createEl('h3', {text: 'Global Allowed Folders'});
-		containerEl.createEl('p', {text: 'These folders will always remain visible and accessible, even when you are scoped inside a Sub-Vault. This is useful for global Attachment or Template folders.', cls: 'setting-item-description'});
+		new Setting(containerEl).setName("Global allowed folders").setHeading();
+		containerEl.createEl('p', {text: 'These folders will always remain visible and accessible, even when you are scoped inside a sub-vault. This is useful for global attachment or template folders.', cls: 'setting-item-description'});
 
 		let newFolderPath = '';
 		new Setting(containerEl)
-			.setName('Add Global Allowed Folder')
+			.setName('Add global allowed folder')
 			.setDesc('Select a folder to add to your whitelist.')
 			.addText(text => {
 				new FolderSuggest(this.app, text.inputEl);
