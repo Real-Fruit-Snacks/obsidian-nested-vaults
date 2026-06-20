@@ -1,0 +1,11 @@
+{
+	"id": "obsidian-nested-vaults",
+	"name": "Nested Vaults",
+	"version": "1.0.0",
+	"minAppVersion": "1.0.0",
+	"description": "Scope your vault to a specific folder, effectively treating it as a nested sub-vault.",
+	"author": "Real-Fruit-Snacks",
+	"authorUrl": "",
+	"fundingUrl": "",
+	"isDesktopOnly": false
+}

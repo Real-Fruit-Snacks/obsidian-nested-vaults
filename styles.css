@@ -1,0 +1,6 @@
+
+
+/* Completely hide files and folders that are outside the active sub-vault */
+body.nested-vault-active .is-outside-subvault {
+    display: none;
+}
