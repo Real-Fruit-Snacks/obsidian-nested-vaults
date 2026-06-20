@@ -142,40 +142,36 @@ export default class NestedVaultsPlugin extends Plugin {
 
 		// Listen for deleting folders
 		this.registerEvent(
-			this.app.workspace.onLayoutReady(() => {
-				this.app.vault.on('delete', async (file) => {
-					if (this.settings.activeSubVault === file.path || this.settings.activeSubVault.startsWith(file.path + '/')) {
-						this.settings.activeSubVault = '';
-						await this.saveSettings();
-						new Notice('Active sub-vault was deleted. Cleared sub-vault.');
-						this.applyVisualScoping();
-					}
-				});
+			this.app.vault.on('delete', async (file) => {
+				if (this.settings.activeSubVault === file.path || this.settings.activeSubVault.startsWith(file.path + '/')) {
+					this.settings.activeSubVault = '';
+					await this.saveSettings();
+					new Notice('Active sub-vault was deleted. Cleared sub-vault.');
+					this.applyVisualScoping();
+				}
 			})
 		);
 
 		// Listen for new notes created outside the active sub-vault
 		this.registerEvent(
-			this.app.workspace.onLayoutReady(() => {
-				this.app.vault.on('create', (file) => {
-					if (!this.settings.activeSubVault) return;
-					if (file instanceof TFile && file.extension === 'md') {
-						if (!this.isPathAllowed(file.path)) {
-							// Wait a tiny bit to avoid Obsidian getting confused
-							window.setTimeout(() => {
-								void (async () => {
-									try {
-										const newPath = `${this.settings.activeSubVault}/${file.name}`;
-										await this.app.vault.rename(file, newPath);
-										new Notice(`Moved new note into sub-vault: ${file.name}`);
-									} catch (e) {
-										console.error("Could not move file", e);
-									}
-								})();
-							}, 100);
-						}
+			this.app.vault.on('create', (file) => {
+				if (!this.settings.activeSubVault) return;
+				if (file instanceof TFile && file.extension === 'md') {
+					if (!this.isPathAllowed(file.path)) {
+						// Wait a tiny bit to avoid Obsidian getting confused
+						window.setTimeout(() => {
+							void (async () => {
+								try {
+									const newPath = `${this.settings.activeSubVault}/${file.name}`;
+									await this.app.vault.rename(file, newPath);
+									new Notice(`Moved new note into sub-vault: ${file.name}`);
+								} catch (e) {
+									console.error("Could not move file", e);
+								}
+							})();
+						}, 100);
 					}
-				});
+				}
 			})
 		);
 		
@@ -194,13 +190,10 @@ export default class NestedVaultsPlugin extends Plugin {
 	}
 
 	async loadSettings() {
-		 
-		const data: unknown = await this.loadData();
+		const data: Record<string, unknown> | null = await this.loadData() as Record<string, unknown> | null;
 		
 		// Migration for globalAllowedFolders from string to string[]
-		 
 		if (data && typeof data.globalAllowedFolders === 'string') {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 			data.globalAllowedFolders = data.globalAllowedFolders.split(',').map((s: string) => s.trim()).filter((s: string) => s.length > 0);
 		}
 		
@@ -271,8 +264,7 @@ export default class NestedVaultsPlugin extends Plugin {
 				}
 				// Also check frontmatter tags
 				if (cache && cache.frontmatter && cache.frontmatter.tags) {
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-					const fmTags: any = cache.frontmatter.tags;
+					const fmTags: string[] | string = cache.frontmatter.tags as string[] | string;
 					if (Array.isArray(fmTags)) {
 						fmTags.forEach(t => allowedTags.add(`#${t}`.toLowerCase()));
 					} else if (typeof fmTags === 'string') {
