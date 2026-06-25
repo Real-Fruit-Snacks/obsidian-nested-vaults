@@ -1,6 +1,6 @@
 {
   "name": "obsidian-nested-vaults",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Scope your Obsidian vault to a specific folder, effectively treating it as a nested sub-vault.",
   "main": "main.js",
   "type": "module",

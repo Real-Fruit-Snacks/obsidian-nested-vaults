@@ -1,7 +1,7 @@
 {
   "id": "nested-vaults",
   "name": "Nested Vaults",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minAppVersion": "1.4.10",
   "description": "Scope your vault to a specific folder, effectively treating it as a nested sub-vault.",
   "author": "Real-Fruit-Snacks",
