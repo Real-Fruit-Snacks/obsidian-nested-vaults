@@ -1,48 +1,99 @@
-# Obsidian Nested Vaults
+<div align="center">
 
-[![Obsidian Downloads](https://img.shields.io/badge/obsidian-plugin-blue.svg)](https://obsidian.md)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  <img alt="Nested Vaults — scope your vault to a single folder" src="docs/assets/banner.svg" width="100%" />
 
-**Nested Vaults** is a powerful plugin for [Obsidian](https://obsidian.md) that lets you magically scope your entire vault down to a specific folder. 
+  **Scope your entire Obsidian vault down to a single folder — file explorer, search, graph, tags, and backlinks all respect the boundary.**
 
-Have a massive master vault, but want to focus entirely on a single project? Instead of opening a separate vault window, this plugin instantly restricts your File Explorer, Core Search, Tags Pane, and Backlinks to *only* show files within your chosen sub-folder!
+  [![License: MIT](https://img.shields.io/badge/License-MIT-63f2ab.svg)](LICENSE)
+  [![Latest release](https://img.shields.io/github/v/release/Real-Fruit-Snacks/obsidian-nested-vaults?color=6bdcff&label=release)](https://github.com/Real-Fruit-Snacks/obsidian-nested-vaults/releases)
+  [![Obsidian](https://img.shields.io/badge/Obsidian-1.4.10%2B-f0c674.svg)](https://obsidian.md)
+
+  [Documentation](https://real-fruit-snacks.github.io/obsidian-nested-vaults/) · [Changelog](CHANGELOG.md) · [Report an issue](https://github.com/Real-Fruit-Snacks/obsidian-nested-vaults/issues)
+
+</div>
+
+---
+
+## Overview
+
+A big master vault is great — until you need to spend the afternoon inside one project. Nested Vaults lets you pick any folder and treat it as a temporary vault of its own, without opening a second vault window or losing your plugins, themes, and settings.
+
+While a Sub-Vault is active, the file explorer shows only that folder (plus anything you whitelist), core Search and the Graph views carry a `path:` filter for it, the tag pane shows only tags used inside it, backlinks from outside it are hidden, and opening an outside file is blocked with a notice. Leave the Sub-Vault from the status bar or ribbon and everything returns instantly — nothing about your files is ever changed to make the scoping happen.
 
 ## Features
 
-- **Strict File Explorer Scoping**: Instantly hides all folders and files outside your active sub-vault.
-- **Aggressive View Blocking**: Prevents accidental navigation outside your sub-vault. If you click a link that leads outside your scope, the plugin blocks it and closes the tab.
-- **Robust Search & Graph Injection**: Automatically enforces a `path:"Your/Sub/Vault"` filter into Obsidian's native Search and Graph views. Resists programmatic overrides.
-- **Smart Tags & Backlinks Filtering**: Hides tags and backlinks that belong to notes outside your sub-vault. You only see the context relevant to your current project.
-- **Global Allowed Folders**: Whitelist specific folders (like `Attachments` or `Templates`) in settings. These stay accessible globally so your embedded images and standard templates never break.
-- **Magical Note Creation**: Automatically moves newly created notes straight into your active sub-vault.
-- **Seamless Integrations**: Supports a native Status Bar indicator, Command Palette actions, and dynamic settings updates if you rename your folders!
+- **File explorer scoping** — folders and files outside the active Sub-Vault are hidden. Parents of the Sub-Vault and of allowed folders stay visible so everything remains reachable.
+- **Search and Graph scoping** — a `path:"<sub-vault>"` filter is added to core Search, Graph, and local graph queries, and cleanly removed when you leave. Your own query text is left untouched. Toggleable in settings.
+- **Tag pane filtering** — only tags used by notes inside the Sub-Vault are shown, with nested tags (`#project/idea`) matched by their full path.
+- **Backlink filtering** — backlinks from notes outside the Sub-Vault are hidden, both in the backlinks pane and in the linked-mentions section at the bottom of notes.
+- **Open blocking** — following a link to a file outside the Sub-Vault shows a notice and turns the tab into an empty tab instead of opening the file.
+- **Global allowed folders** — whitelist folders like `Attachments` or `Templates` that stay visible and accessible in every Sub-Vault, so embeds and templates never break.
+- **Scoped quick switcher** — a quick switcher that searches only inside the active Sub-Vault, with paths shown relative to it.
+- **Auto-move new notes** *(opt-in)* — notes created outside the Sub-Vault are moved into it automatically, with links to the moved note updated.
+- **Status bar and ribbon** — the status bar shows the active Sub-Vault (click it to leave), and a ribbon action leaves it too. Renaming the scoped folder follows along; deleting it clears the scope.
 
 ## Installation
 
-### Option 1: BRAT (Beta Reviewer's Auto-update Tool)
-1. Install [BRAT](https://github.com/TfTHacker/obsidian42-brat) from the Community Plugins tab.
-2. Go to BRAT settings and click **Add Beta plugin**.
-3. Paste the URL of this GitHub repository.
-4. Enable **Nested Vaults** in your Community Plugins list.
+**Requires Obsidian 1.4.10 or newer.**
 
-### Option 2: Manual Installation
-1. Go to the **Releases** page of this repository.
-2. Download the latest `main.js`, `manifest.json`, and `styles.css`.
-3. Create a folder named `obsidian-nested-vaults` inside your `.obsidian/plugins/` directory.
-4. Place the downloaded files into that folder.
-5. Reload Obsidian and enable the plugin.
+### Community plugins (recommended)
 
-## Usage
+1. Open **Settings → Community plugins → Browse**.
+2. Search for **Nested Vaults**, then **Install** and **Enable**.
 
-1. **Set your Sub-Vault**: Right-click any folder in your File Explorer and select **Set as Active Sub-Vault**, or use the `Set Active Sub-Vault` command in your Command Palette.
-2. **Focus**: Your File Explorer, Search, Tags, and Backlinks will instantly clamp down to that folder.
-3. **Leave**: Click the `Leave Sub-Vault` icon in the left ribbon, or click the sub-vault name in your bottom Status Bar to return to your master vault.
+### BRAT (for the latest pre-release)
 
-## Settings
+Install [BRAT](https://github.com/TfTHacker/obsidian42-brat), then add `Real-Fruit-Snacks/obsidian-nested-vaults` as a beta plugin.
 
-- **Active Sub-Vault**: The path to your currently focused folder.
-- **Global Allowed Folders**: A professional whitelist manager for global assets (e.g., `Attachments`, `Templates`).
+### Manual
+
+Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/Real-Fruit-Snacks/obsidian-nested-vaults/releases/latest) into `<your-vault>/.obsidian/plugins/nested-vaults/`, then enable Nested Vaults under **Settings → Community plugins**.
+
+## Getting started
+
+1. **Enter a Sub-Vault** — right-click any folder in the file explorer and choose **Set as Active Sub-Vault**, or run **Set Active Sub-Vault** from the command palette.
+2. **Work** — the explorer, search, graph, tags, and backlinks are now scoped to that folder.
+3. **Leave** — click the Sub-Vault name in the status bar, or the **Leave Active Sub-Vault** ribbon icon, and the whole vault comes back.
+
+### Commands
+
+| Command | Description |
+| --- | --- |
+| Set Active Sub-Vault | Pick a folder to scope the vault to |
+| Clear Active Sub-Vault | Return to the full vault |
+| Open Scoped Quick Switcher | Quick switcher limited to the active Sub-Vault |
+
+### Settings
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| Active Sub-Vault | *(empty)* | The folder currently scoped to; supports autocomplete |
+| Auto-move new notes into the Sub-Vault | Off | Move notes created outside the Sub-Vault into it, updating links |
+| Scope Search and Graph to the Sub-Vault | On | Add and maintain the `path:` filter in Search and Graph queries |
+| Global allowed folders | `Attachments`, `Templates` | Folders that stay visible and accessible in every Sub-Vault |
+
+## How the scoping works
+
+Nested Vaults never moves, locks, or rewrites your files to create the boundary. The file explorer, tag pane, and backlinks are scoped by tagging out-of-scope items with a CSS class that hides them; Search and Graph are scoped by inserting a `path:` token into their query inputs; and out-of-scope files are kept out of view by intercepting file-open events. Disable the plugin (or leave the Sub-Vault) and your vault is exactly as it always was.
+
+Because the boundary is a view-level convenience rather than a permission system, other plugins that read the vault directly can still see the whole vault.
+
+## Architecture
+
+```
+nested-vaults/
+├── manifest.json    Plugin metadata
+├── versions.json    Plugin version → minimum Obsidian version map
+├── main.js          Plugin code (single-file CommonJS, no build step)
+├── styles.css       One rule: hide elements marked out-of-scope
+└── docs/            Documentation site and artwork
+```
+
+- **No build step** — a single hand-maintained CommonJS `main.js`, with no framework or bundler.
+- **Event-driven** — scoping refreshes on vault, metadata, and layout events plus targeted pane observers, debounced so rapid changes coalesce into one pass.
+- **Safe writes** — the only file operation the plugin can perform is the opt-in auto-move, which uses `fileManager.renameFile` so links to the moved note are updated.
+- **No network, no telemetry** — the plugin never talks to the network.
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for more details.
+Released under the [MIT License](LICENSE).

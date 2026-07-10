@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Nested Vaults">
+  <defs>
+    <linearGradient id="tilebg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e1214"/>
+      <stop offset="1" stop-color="#182024"/>
+    </linearGradient>
+    <clipPath id="tile"><rect x="8" y="8" width="496" height="496" rx="96"/></clipPath>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect x="8" y="8" width="496" height="496" fill="url(#tilebg)"/>
+
+    <!-- outer folder: the whole vault -->
+    <path d="M120,150
+             a22,22 0 0 1 22,-22
+             h92
+             a22,22 0 0 1 16.5,7.5
+             l23,26.5
+             h96.5
+             a22,22 0 0 1 22,22
+             v178
+             a22,22 0 0 1 -22,22
+             h-228
+             a22,22 0 0 1 -22,-22
+             z"
+          fill="none" stroke="#b4c3bd" stroke-width="17" stroke-linejoin="round"/>
+
+    <!-- inner folder: the scoped sub-vault -->
+    <path d="M196,258
+             a12,12 0 0 1 12,-12
+             h46
+             a12,12 0 0 1 9,4
+             l12,14
+             h49
+             a12,12 0 0 1 12,12
+             v66
+             a12,12 0 0 1 -12,12
+             h-116
+             a12,12 0 0 1 -12,-12
+             z"
+          fill="#63f2ab"/>
+    <!-- soft accent halo around the inner folder -->
+    <path d="M196,258
+             a12,12 0 0 1 12,-12
+             h46
+             a12,12 0 0 1 9,4
+             l12,14
+             h49
+             a12,12 0 0 1 12,12
+             v66
+             a12,12 0 0 1 -12,12
+             h-116
+             a12,12 0 0 1 -12,-12
+             z"
+          fill="none" stroke="#63f2ab" stroke-width="26" opacity="0.16" stroke-linejoin="round"/>
+  </g>
+  <rect x="8" y="8" width="496" height="496" rx="96" fill="none" stroke="#2a363d" stroke-width="2"/>
+</svg>
