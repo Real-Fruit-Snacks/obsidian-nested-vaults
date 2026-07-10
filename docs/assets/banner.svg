@@ -1,85 +1,83 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="Nested Vaults — scope your vault to a single folder">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Nested Vaults — scope your vault to a single folder">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#090c0d"/>
       <stop offset="1" stop-color="#0e1214"/>
     </linearGradient>
   </defs>
-  <rect width="1280" height="640" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#bg)"/>
 
-  <!-- faint horizontal hairlines for terminal texture -->
-  <g stroke="#13191c" stroke-width="1">
-    <line x1="0" y1="80" x2="1280" y2="80"/>
-    <line x1="0" y1="560" x2="1280" y2="560"/>
+  <!-- ============ top: wordmark ============ -->
+  <g font-family="'Cascadia Code','JetBrains Mono',Consolas,'DejaVu Sans Mono',monospace" text-anchor="middle">
+    <text x="600" y="122" font-size="19" font-weight="700" letter-spacing="5" fill="#879994"><tspan fill="#63f2ab">&#10095;</tspan>&#160;OBSIDIAN PLUGIN</text>
+    <text x="600" y="230" font-size="88" font-weight="700" letter-spacing="3"><tspan fill="#dce4df">NESTED</tspan><tspan fill="#63f2ab">&#160;VAULTS</tspan></text>
+    <line x1="330" y1="266" x2="870" y2="266" stroke="#2a363d" stroke-width="2"/>
+    <text x="600" y="312" font-size="19" font-weight="600" letter-spacing="5" fill="#879994">SCOPE YOUR VAULT TO A SINGLE FOLDER</text>
   </g>
 
-  <!-- ============ left: wordmark ============ -->
-  <g font-family="'Cascadia Code','JetBrains Mono',Consolas,'DejaVu Sans Mono',monospace">
-    <text x="92" y="205" font-size="19" font-weight="700" letter-spacing="5" fill="#879994"><tspan fill="#63f2ab">&#10095;</tspan>&#160;OBSIDIAN PLUGIN</text>
-    <text x="88" y="308" font-size="97" font-weight="700" letter-spacing="3" fill="#dce4df">NESTED</text>
-    <text x="88" y="404" font-size="97" font-weight="700" letter-spacing="3" fill="#63f2ab">VAULTS</text>
-    <line x1="92" y1="438" x2="560" y2="438" stroke="#2a363d" stroke-width="2"/>
-    <text x="92" y="482" font-size="19" font-weight="600" letter-spacing="5" fill="#879994">SCOPE YOUR VAULT TO A SINGLE FOLDER</text>
-    <text x="92" y="540" font-size="17" fill="#63736f"><tspan fill="#63f2ab" font-weight="700">&#10095;</tspan> vault --scope "Projects/Research"<tspan fill="#63f2ab">&#9612;</tspan></text>
+  <!-- ============ bottom: pane illustration ============ -->
+  <g transform="translate(-209,263) scale(0.82)">
+    <!-- outer vault pane -->
+    <rect x="716" y="106" width="474" height="424" rx="10" fill="#0e1214" stroke="#2a363d" stroke-width="1.5"/>
+    <line x1="716" y1="150" x2="1190" y2="150" stroke="#2a363d" stroke-width="1.5"/>
+    <circle cx="744" cy="128" r="5" fill="#39484f"/>
+    <circle cx="764" cy="128" r="5" fill="#39484f"/>
+    <circle cx="784" cy="128" r="5" fill="#39484f"/>
+    <text x="812" y="134" font-family="'Cascadia Code','JetBrains Mono',Consolas,monospace" font-size="12" font-weight="700" letter-spacing="2.5" fill="#879994">VAULT &#8212; FILE EXPLORER</text>
+
+    <!-- tree rows -->
+    <g>
+      <!-- row 1 -->
+      <path d="M750,180 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63736f" opacity="0.7"/>
+      <rect x="794" y="185" width="132" height="8" rx="4" fill="#63736f" opacity="0.55"/>
+      <!-- row 2 -->
+      <path d="M750,216 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63736f" opacity="0.7"/>
+      <rect x="794" y="221" width="96" height="8" rx="4" fill="#63736f" opacity="0.55"/>
+      <!-- row 3: the active sub-vault -->
+      <rect x="736" y="245" width="304" height="30" rx="6" fill="#63f2ab" opacity="0.13"/>
+      <rect x="736" y="245" width="3" height="30" fill="#63f2ab"/>
+      <path d="M750,252 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 v0 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63f2ab"/>
+      <rect x="794" y="257" width="150" height="8" rx="4" fill="#b4c3bd"/>
+      <!-- nested children of the active folder -->
+      <rect x="818" y="292" width="10" height="12" rx="2" fill="#879994" opacity="0.8"/>
+      <rect x="838" y="294" width="104" height="8" rx="4" fill="#879994" opacity="0.6"/>
+      <rect x="818" y="326" width="10" height="12" rx="2" fill="#879994" opacity="0.8"/>
+      <rect x="838" y="328" width="84" height="8" rx="4" fill="#879994" opacity="0.6"/>
+      <!-- rows outside the scope, fading away -->
+      <path d="M750,362 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63736f" opacity="0.4"/>
+      <rect x="794" y="367" width="118" height="8" rx="4" fill="#63736f" opacity="0.3"/>
+      <path d="M750,398 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63736f" opacity="0.25"/>
+      <rect x="794" y="403" width="88" height="8" rx="4" fill="#63736f" opacity="0.18"/>
+      <path d="M750,434 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63736f" opacity="0.14"/>
+      <rect x="794" y="439" width="104" height="8" rx="4" fill="#63736f" opacity="0.1"/>
+    </g>
+
+    <!-- connector from active row to the sub-vault pane -->
+    <path d="M1043,260 h60 v34" fill="none" stroke="#63f2ab" stroke-width="2" opacity="0.55"/>
+    <circle cx="1043" cy="260" r="3.5" fill="#63f2ab"/>
+
+    <!-- inner: scoped sub-vault pane -->
+    <rect x="1006" y="300" width="234" height="270" rx="10" fill="#090c0d" opacity="0.55" transform="translate(6,8)"/>
+    <rect x="1006" y="300" width="234" height="270" rx="10" fill="#13191c" stroke="#63f2ab" stroke-opacity="0.55" stroke-width="1.5"/>
+    <line x1="1006" y1="338" x2="1240" y2="338" stroke="#2a363d" stroke-width="1.5"/>
+    <circle cx="1028" cy="319" r="4" fill="#63f2ab" opacity="0.8"/>
+    <text x="1044" y="324" font-family="'Cascadia Code','JetBrains Mono',Consolas,monospace" font-size="11.5" font-weight="700" letter-spacing="2.5" fill="#63f2ab">SUB-VAULT</text>
+
+    <g>
+      <path d="M1028,360 h8 l2.5,3 h11 a3,3 0 0 1 3,3 v7 a3,3 0 0 1 -3,3 h-21.5 a3,3 0 0 1 -3,-3 v-10 a3,3 0 0 1 3,-3 z" fill="#63f2ab" opacity="0.9"/>
+      <rect x="1064" y="364" width="118" height="8" rx="4" fill="#b4c3bd"/>
+      <rect x="1044" y="396" width="9" height="11" rx="2" fill="#b4c3bd" opacity="0.9"/>
+      <rect x="1062" y="398" width="96" height="7" rx="3.5" fill="#879994"/>
+      <rect x="1044" y="428" width="9" height="11" rx="2" fill="#b4c3bd" opacity="0.9"/>
+      <rect x="1062" y="430" width="128" height="7" rx="3.5" fill="#879994"/>
+      <rect x="1044" y="460" width="9" height="11" rx="2" fill="#b4c3bd" opacity="0.9"/>
+      <rect x="1062" y="462" width="82" height="7" rx="3.5" fill="#879994"/>
+      <rect x="1044" y="492" width="9" height="11" rx="2" fill="#b4c3bd" opacity="0.9"/>
+      <rect x="1062" y="494" width="108" height="7" rx="3.5" fill="#879994"/>
+    </g>
+    <text x="1028" y="546" font-family="'Cascadia Code','JetBrains Mono',Consolas,monospace" font-size="10.5" font-weight="700" letter-spacing="2" fill="#63736f">4 NOTES &#183; SCOPED</text>
   </g>
 
-  <!-- ============ right: outer vault pane ============ -->
-  <rect x="716" y="106" width="474" height="424" rx="10" fill="#0e1214" stroke="#2a363d" stroke-width="1.5"/>
-  <line x1="716" y1="150" x2="1190" y2="150" stroke="#2a363d" stroke-width="1.5"/>
-  <circle cx="744" cy="128" r="5" fill="#39484f"/>
-  <circle cx="764" cy="128" r="5" fill="#39484f"/>
-  <circle cx="784" cy="128" r="5" fill="#39484f"/>
-  <text x="812" y="134" font-family="'Cascadia Code','JetBrains Mono',Consolas,monospace" font-size="12" font-weight="700" letter-spacing="2.5" fill="#879994">VAULT &#8212; FILE EXPLORER</text>
-
-  <!-- tree rows -->
-  <g>
-    <!-- row 1 -->
-    <path d="M750,180 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63736f" opacity="0.7"/>
-    <rect x="794" y="185" width="132" height="8" rx="4" fill="#63736f" opacity="0.55"/>
-    <!-- row 2 -->
-    <path d="M750,216 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63736f" opacity="0.7"/>
-    <rect x="794" y="221" width="96" height="8" rx="4" fill="#63736f" opacity="0.55"/>
-    <!-- row 3: the active sub-vault -->
-    <rect x="736" y="245" width="304" height="30" rx="6" fill="#63f2ab" opacity="0.13"/>
-    <rect x="736" y="245" width="3" height="30" fill="#63f2ab"/>
-    <path d="M750,252 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 v0 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63f2ab"/>
-    <rect x="794" y="257" width="150" height="8" rx="4" fill="#b4c3bd"/>
-    <!-- nested children of the active folder -->
-    <rect x="818" y="292" width="10" height="12" rx="2" fill="#879994" opacity="0.8"/>
-    <rect x="838" y="294" width="104" height="8" rx="4" fill="#879994" opacity="0.6"/>
-    <rect x="818" y="326" width="10" height="12" rx="2" fill="#879994" opacity="0.8"/>
-    <rect x="838" y="328" width="84" height="8" rx="4" fill="#879994" opacity="0.6"/>
-    <!-- rows outside the scope, fading away -->
-    <path d="M750,362 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63736f" opacity="0.4"/>
-    <rect x="794" y="367" width="118" height="8" rx="4" fill="#63736f" opacity="0.3"/>
-    <path d="M750,398 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63736f" opacity="0.25"/>
-    <rect x="794" y="403" width="88" height="8" rx="4" fill="#63736f" opacity="0.18"/>
-    <path d="M750,434 h9 l3,3.5 h13 a3,3 0 0 1 3,3 v8 a3,3 0 0 1 -3,3 h-25 a3,3 0 0 1 -3,-3 v-11 a3,3 0 0 1 3,-3 z" fill="#63736f" opacity="0.14"/>
-    <rect x="794" y="439" width="104" height="8" rx="4" fill="#63736f" opacity="0.1"/>
-  </g>
-
-  <!-- connector from active row to the sub-vault pane -->
-  <path d="M1043,260 h60 v34" fill="none" stroke="#63f2ab" stroke-width="2" opacity="0.55"/>
-  <circle cx="1043" cy="260" r="3.5" fill="#63f2ab"/>
-
-  <!-- ============ inner: scoped sub-vault pane ============ -->
-  <rect x="1006" y="300" width="234" height="270" rx="10" fill="#090c0d" opacity="0.55" transform="translate(6,8)"/>
-  <rect x="1006" y="300" width="234" height="270" rx="10" fill="#13191c" stroke="#63f2ab" stroke-opacity="0.55" stroke-width="1.5"/>
-  <line x1="1006" y1="338" x2="1240" y2="338" stroke="#2a363d" stroke-width="1.5"/>
-  <circle cx="1028" cy="319" r="4" fill="#63f2ab" opacity="0.8"/>
-  <text x="1044" y="324" font-family="'Cascadia Code','JetBrains Mono',Consolas,monospace" font-size="11.5" font-weight="700" letter-spacing="2.5" fill="#63f2ab">SUB-VAULT</text>
-
-  <g>
-    <path d="M1028,360 h8 l2.5,3 h11 a3,3 0 0 1 3,3 v7 a3,3 0 0 1 -3,3 h-21.5 a3,3 0 0 1 -3,-3 v-10 a3,3 0 0 1 3,-3 z" fill="#63f2ab" opacity="0.9"/>
-    <rect x="1064" y="364" width="118" height="8" rx="4" fill="#b4c3bd"/>
-    <rect x="1044" y="396" width="9" height="11" rx="2" fill="#b4c3bd" opacity="0.9"/>
-    <rect x="1062" y="398" width="96" height="7" rx="3.5" fill="#879994"/>
-    <rect x="1044" y="428" width="9" height="11" rx="2" fill="#b4c3bd" opacity="0.9"/>
-    <rect x="1062" y="430" width="128" height="7" rx="3.5" fill="#879994"/>
-    <rect x="1044" y="460" width="9" height="11" rx="2" fill="#b4c3bd" opacity="0.9"/>
-    <rect x="1062" y="462" width="82" height="7" rx="3.5" fill="#879994"/>
-    <rect x="1044" y="492" width="9" height="11" rx="2" fill="#b4c3bd" opacity="0.9"/>
-    <rect x="1062" y="494" width="108" height="7" rx="3.5" fill="#879994"/>
-  </g>
-  <text x="1028" y="546" font-family="'Cascadia Code','JetBrains Mono',Consolas,monospace" font-size="10.5" font-weight="700" letter-spacing="2" fill="#63736f">4 NOTES &#183; SCOPED</text>
+  <!-- bottom prompt line -->
+  <text x="600" y="770" text-anchor="middle" font-family="'Cascadia Code','JetBrains Mono',Consolas,monospace" font-size="16" fill="#63736f"><tspan fill="#63f2ab" font-weight="700">&#10095;</tspan> vault --scope "Projects/Research"<tspan fill="#63f2ab">&#9612;</tspan></text>
 </svg>

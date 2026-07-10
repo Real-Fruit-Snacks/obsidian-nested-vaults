@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img alt="Nested Vaults — scope your vault to a single folder" src="docs/assets/banner.svg" width="100%" />
+  <img alt="Nested Vaults — scope your vault to a single folder" src="docs/assets/banner.svg" width="760" />
 
   **Scope your entire Obsidian vault down to a single folder — file explorer, search, graph, tags, and backlinks all respect the boundary.**
 
