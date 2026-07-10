@@ -1,50 +1,57 @@
-name: Release Obsidian plugin
+name: Release
 
 on:
-    push:
-        tags:
-            - '*'
+  push:
+    tags:
+      - "*"
+
+permissions:
+  contents: write
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: write
-            id-token: write
-            attestations: write
-        steps:
-            - uses: actions/checkout@v6
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
 
-            - name: Use Node.js
-              uses: actions/setup-node@v6
-              with:
-                  node-version: 24
-                  cache: 'npm'
+      - name: Verify tag matches manifest.json version
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          manifest_version=$(jq -r .version manifest.json)
+          if [ "$tag" != "$manifest_version" ]; then
+            echo "Tag ($tag) does not match manifest.json version ($manifest_version)" >&2
+            exit 1
+          fi
 
-            - name: Build plugin
-              run: |
-                  npm ci
-                  npm run build
+      - name: Verify plugin syntax
+        run: node --check main.js
 
-            - name: Check for optional styles
-              id: styles
-              run: |
-                  [ -f styles.css ] && echo "exists=true" >> "$GITHUB_OUTPUT" || echo "exists=false" >> "$GITHUB_OUTPUT"
+      - name: Extract release notes from CHANGELOG
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          awk -v tag="$tag" '
+            $0 ~ "^## \\[" tag "\\]" { flag = 1; next }
+            /^## \[/ && flag { exit }
+            flag { print }
+          ' CHANGELOG.md > release-notes.md
+          if [ ! -s release-notes.md ]; then
+            echo "See CHANGELOG.md" > release-notes.md
+          fi
 
-            - name: Attest build provenance
-              uses: actions/attest@v4
-              with:
-                  subject-path: |
-                      main.js
-                      ${{ steps.styles.outputs.exists == 'true' && 'styles.css' || '' }}
+      - name: Build plugin zip
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          mkdir -p nested-vaults
+          cp manifest.json main.js styles.css versions.json nested-vaults/
+          zip -r "nested-vaults-${tag}.zip" nested-vaults
 
-            - name: Create release
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: |
-                  tag="${GITHUB_REF#refs/tags/}"
-
-                  gh release create "$tag" \
-                    --title="$tag" \
-                    --draft \
-                    main.js manifest.json ${{ steps.styles.outputs.exists == 'true' && 'styles.css' || '' }}
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          gh release create "$tag" \
+            --title="$tag" \
+            --notes-file=release-notes.md \
+            main.js manifest.json styles.css versions.json "nested-vaults-${tag}.zip"
